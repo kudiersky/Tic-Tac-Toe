@@ -93,10 +93,27 @@ function startGame() {
     }
 };
 
+function mouseOver() {
+
+  if(game.currentPlayer === 1){
+this.classList.add('box-filled-1')
+}
+  else{
+this.classList.add('box-filled-2')
+  }
+}
+
+function mouseOut() {
+this.classList.remove('box-filled-1', 'box-filled-2')
+}
+
+
 function activateBoxes() {
     var boxes = document.getElementsByClassName('box')
     for (var i = 0; i < boxes.length; i++) { //for loop to add event listener to each box
-        boxes[i].addEventListener('click', fillBox, false); //add event listener to all boxes
+        boxes[i].addEventListener('click', fillBox, false);
+        boxes[i].addEventListener("mousemove", mouseOver, false); //add event listener to all boxes
+        boxes[i].addEventListener("mouseout", mouseOut, false);
     }
 }
 
@@ -124,6 +141,7 @@ function removeActiveBoxes() { //remove event listener to allow winning row to b
     let boxes = document.querySelectorAll('li');
     boxes.forEach((box) => {
         box.removeEventListener("click", fillBox);
+        box.removeEventListener("click", mouseOver);
     });
 };
 
