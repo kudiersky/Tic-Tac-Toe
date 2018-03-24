@@ -31,7 +31,8 @@
      color: white;
 }
  .screen {
-     text-align: center;
+     text-align:
+     center;
      position: absolute;
      top: 0;
      left: 0;
@@ -194,6 +195,12 @@
 }
  .startCSSX:hover {
      color: #FFA000;
+}
+.player1Hover:hover {
+    color: #3688C3;
+}
+.player2Hover:hover {
+    color: #FFA000;
 }
  .playerSubmit {
      margin-top: 2.5em;
@@ -358,4 +365,3 @@
      -moz-transform: translate3d(100%, 0, 0);
      transform: translate3d(100%, 0, 0);
 }
- 
