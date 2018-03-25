@@ -48,7 +48,7 @@ function highlight(a, b, c) { //highlight winning combination of LIs a,b,c are t
     a.classList.add("highlighted")
     b.classList.add("highlighted")
     c.classList.add("highlighted")
-    setTimeout(RemoveClass, 2000);
+    setTimeout(RemoveClass, 2000); //remove class after 2000ms
 
     function RemoveClass() {
         $(".highlighted").removeClass("highlighted"); //remove the class of highlighted
@@ -89,31 +89,16 @@ function startGame() {
     setNames();
 
     if (game.singlePlayer === true && game.currentPlayer === 2) {
-        AIPlay();
+        AIPlay(); //if playing against computer let AI play
     }
 };
-
-function mouseOver() {
-
-  if(game.currentPlayer === 1){
-this.classList.add('box-filled-1')
-}
-  else{
-this.classList.add('box-filled-2')
-  }
-}
-
-function mouseOut() {
-this.classList.remove('box-filled-1', 'box-filled-2')
-}
-
 
 function activateBoxes() {
     var boxes = document.getElementsByClassName('box')
     for (var i = 0; i < boxes.length; i++) { //for loop to add event listener to each box
         boxes[i].addEventListener('click', fillBox, false);
-        boxes[i].addEventListener("mousemove", mouseOver, false); //add event listener to all boxes
-        boxes[i].addEventListener("mouseout", mouseOut, false);
+        boxes[i].addEventListener('mouseover', mouseOn, false); //add mouse over for current player svg
+        boxes[i].addEventListener('mouseout', mouseOff, false); //remove on mouse off
     }
 }
 
@@ -128,6 +113,7 @@ function gameReset() { //cycle through Array to remove box fills and selected.
         box.classList.remove('box-filled-1', 'box-filled-2', 'selected');
         box.addEventListener('click', fillBox, false); //readd event listener
     });
+    activateBoxes(); //activate boxes on reset
     $('#finishPage').hide(); //show final page dynamilcally
     $('#boardPage').show(); //show the board page
     player1.win = false; //restore defaults
@@ -141,7 +127,9 @@ function removeActiveBoxes() { //remove event listener to allow winning row to b
     let boxes = document.querySelectorAll('li');
     boxes.forEach((box) => {
         box.removeEventListener("click", fillBox);
-        box.removeEventListener("click", mouseOver);
+        box.removeEventListener("mouseover", mouseOn);
+        box.removeEventListener("mouseout", mouseOff);
+
     });
 };
 
@@ -177,6 +165,20 @@ function playerSwitch() { //using a play counter if the counter is even the curr
         document.getElementById('player' + game.currentPlayer).classList.add('active');
     }
 };
+
+function mouseOn(){//callback in activateBoxes()
+  if (!$(this).hasClass('selected'))  { //add class of current player to box on mouse over
+  $(this).addClass('box-filled-' + game.currentPlayer);
+  }
+}
+
+function mouseOff(){ //callback in activateBoxes()
+  if (!$(this).hasClass('selected'))  { //remove class of current player to box on mouse over 
+  $(this).removeClass('box-filled-' + game.currentPlayer);
+  }
+}
+
+
 
 function fillBox() { //fill boxes with irent players sign and only if free, alert if filled
 
